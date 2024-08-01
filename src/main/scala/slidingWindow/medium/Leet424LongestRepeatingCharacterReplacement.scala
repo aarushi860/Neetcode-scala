@@ -2,18 +2,16 @@ package slidingWindow.medium
 
 object Leet424LongestRepeatingCharacterReplacement {
   def characterReplacement(s: String, k: Int): Int = {
-    val fMap:Array[Int]=Array.ofDim(26)
-    val start=s.indices.foldLeft(0,0){
-      case((start,max),end) =>
-        val chValue= s.charAt(end)-'A'
-        fMap(chValue)=fMap(chValue)+1
-        val updatedMax=Math.max(max,fMap(chValue))
-        val isValid= end-start-updatedMax+1<=k
-        if(!isValid){
-          fMap(start)=fMap(start)-1
-          (start+1,updatedMax)
-        }else (start,updatedMax)
-    }._1
-    s.length-start  
+    val array = s.map(_ - 'A')
+    val left = array.zipWithIndex.foldLeft(0, Map.empty[Int, Int], 0) {
+      case ((maxFq, fMap, left), (num, idx)) =>
+        val updatedMap = fMap.updated(num, fMap.getOrElse(num, 0) + 1)
+        val updatedMaxFq = Math.max(updatedMap(num), maxFq)
+        val isWindowValid = idx - left + 1 - updatedMaxFq <= k
+        if (!isWindowValid)
+          (updatedMaxFq, updatedMap.updated(array(left), updatedMap(array(left)) - 1), left + 1)
+        else (updatedMaxFq, updatedMap, left)
+    }._3
+    array.length - left
   }
 }

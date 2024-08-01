@@ -1,16 +1,25 @@
 package slidingWindow.medium
 
+import jdk.internal.net.http.frame.GoAwayFrame
+
 object Leet930BinarySubarraysWithSum {
   def numSubarraysWithSum(nums: Array[Int], goal: Int): Int = {
     nums.zipWithIndex.foldLeft(0, 0, 0) {
-      case ((count, curr, left), (num, idx)) =>
-        getUpdated(left, curr + num, nums, idx, goal, count)
+      case ((totalCount, left, currSum), (num, idx)) =>
+
+        val (prefixSum, updatedLeft, updatedCurrSum) = getUpdated(currSum + num, left, 0, idx, goal, nums)
+        val updatedCount = if (updatedCurrSum == goal) totalCount + prefixSum + 1 else totalCount
+        (updatedCount, updatedLeft, updatedCurrSum)
     }._1
   }
 
-  private def getUpdated(left: Int, curr: Int, nums: Array[Int], right: Int, goal: Int, count: Int): (Int, Int, Int) = {
-    if (curr >= goal && left <= right)
-      getUpdated(left + 1, curr - nums(left), nums, right, goal, if (curr == goal) count + 1 else count)
-    else (count, curr, left)
+  private def getUpdated(currSum: Int, left: Int, prefixZero: Int, idx: Int, goal: Int, nums: Array[Int]): (Int, Int, Int) = {
+    if (left <= idx && (currSum > goal || nums(left) == 0)) {
+      if (nums(left) == 0)
+        getUpdated(currSum, left + 1, prefixZero + 1, idx, goal, nums)
+      else getUpdated(currSum - 1, left + 1, prefixZero, idx, goal, nums)
+    } else (prefixZero, left, currSum)
   }
+
+
 }
