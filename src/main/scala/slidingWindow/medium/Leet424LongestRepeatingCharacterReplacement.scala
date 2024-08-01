@@ -14,6 +14,6 @@ object Leet424LongestRepeatingCharacterReplacement {
           (start+1,updatedMax)
         }else (start,updatedMax)
     }._1
-    s.length-start
+    s.length-start  
   }
 }
