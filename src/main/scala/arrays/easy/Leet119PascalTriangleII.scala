@@ -1,6 +1,7 @@
 package arrays.easy
 
-object Leet119PascalTriangleII extends App {
+object
+Leet119PascalTriangleII extends App {
 
   def getRow(rowIndex: Int): List[Int] = {
     if (rowIndex == 0) List(1)
