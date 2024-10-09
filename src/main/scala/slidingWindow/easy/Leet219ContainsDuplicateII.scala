@@ -5,9 +5,6 @@ object Leet219ContainsDuplicateII {
     exists(Map.empty, k, 0, nums)
   }
 
-  def containsNearbyDuplicate(nums: Array[Int], k: Int): Boolean = {
-    exists(Map.empty, k, 0, nums)
-  }
 
   private def exists(map: Map[Int, Int], k: Int, idx: Int, nums: Array[Int]): Boolean = {
     if (idx == nums.length)

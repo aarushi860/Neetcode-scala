@@ -16,7 +16,8 @@ object Leet394DecodeString {
   private def buildDecodedString(stack: mutable.Stack[String]): String = {
     val decodedString = buildString("", stack)
     val k = buildNumber(0, 1, stack)
-    k * decodedString
+//    k * decodedString
+    ""
   }
 
   private def buildString(decodedString: String, stack: mutable.Stack[String]): String = {

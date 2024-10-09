@@ -10,7 +10,7 @@ object Leet24SwapNodesinPairs {
     prev.next
   }
 
-  private def swap(head: ListNode): () = {
+  private def swap(head: ListNode):Unit = {
     if (head == null || head.next == null || head.next.next == null) ()
     else {
       val pair1 = head.next
