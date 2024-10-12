@@ -13,9 +13,10 @@ object Leet2359FindClosestNodetoGivenTwoNodes {
     queue.addOne((node2, 0))
     val node2Visited = mutable.Set[Int]()
     findDistance(edges, distance, queue, node2Visited)
-    distance.zipWithIndex
-      .filter(x => node1Visited.contains(x._1) && node2Visited.contains(x._1))
-      .minByOption(_._1).map(_._2).getOrElse(-1)
+    val result = distance.zipWithIndex
+      .filter(x => node1Visited.contains(x._2) && node2Visited.contains(x._2))
+      .minByOption(_._1)
+    result.map(_._2).getOrElse(-1)
   }
 
 
@@ -27,7 +28,7 @@ object Leet2359FindClosestNodetoGivenTwoNodes {
       val (top, steps) = queue.dequeue()
       visited.addOne(top)
       val outgoing = edges(top)
-      if(outgoing!= -1 && !visited.contains(outgoing)) {
+      if (outgoing != -1 && !visited.contains(outgoing)) {
         distance(outgoing) = Math.max(steps + 1, distance(outgoing))
         queue.addOne((outgoing, steps + 1))
       }
