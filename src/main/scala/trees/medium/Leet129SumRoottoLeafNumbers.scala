@@ -3,17 +3,18 @@ package trees.medium
 import trees.TreeNode
 
 object Leet129SumRoottoLeafNumbers {
+
   def sumNumbers(root: TreeNode): Int = {
-    sum(root)._1
+    updateSum(root, 0)
   }
 
-  private def sum(root:TreeNode):(Int,Int)={
-    if(root==null)(0,0)
-    else{
-      val (leftSum,leftPow)=sum(root.left)
-      val (rightSum,rightPow)=sum(root.right)
-      val ans=leftSum+Math.pow(root.value,leftPow+1) +rightSum+Math.pow(root.value,rightPow+1)
-      (ans.toInt,Math.max(rightPow,leftPow)+1)
+  private def updateSum(root: TreeNode, numberformed: Int): Int = {
+    val updatedNumber = numberformed * 10 + root.value
+    (root.left, root.right) match {
+      case (null, null) => updatedNumber
+      case (null, rightNode) => updateSum(root.right, updatedNumber)
+      case (leftNode, null) => updateSum(root.left, updatedNumber)
+      case (leftnode, rightnode) => updateSum(leftnode, updatedNumber) + updateSum(rightnode, updatedNumber)
     }
   }
 }
