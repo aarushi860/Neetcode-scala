@@ -1,19 +1,18 @@
-//package backtracking.medium
-//
-//object Leet39CombinationSum {
-//  def combinationSum(candidates: Array[Int], target: Int): List[List[Int]] = {
-//
-//  }
-//
-//  private def combinations(candidates:Array[Int],target:Int,sum:Int,current:List[Int],
-//                           acc:List[List[Int]]):List[List[Int]]={
-//    if(sum<0)Nil
-//    else if(sum==target)acc:+current
-//    else{
-//     candidates match {
-//       case head::tail =>combinations(candidates)
-//       case Nil
-//     }
-//    }
-//  }
-//}
+package backtracking.medium
+
+object Leet39CombinationSum {
+  def combinationSum(candidates: Array[Int], target: Int): List[List[Int]] = {
+    validCombinationns(candidates, target, List(), 0)
+  }
+
+  private def validCombinationns(candidates: Array[Int], target: Int,
+                                 acc: List[Int], idx: Int): List[List[Int]] = {
+    if (target == 0) List(acc)
+    else if (target < 0) List()
+    else {
+      candidates.indices.filter(_ >= idx).flatMap { i =>
+        validCombinationns(candidates, target - candidates(i), acc :+ candidates(i), i)
+      }.toList
+    }
+  }
+}
